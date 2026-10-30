@@ -8,7 +8,7 @@
 
 **IONOS PSEUDOCODE** es una plataforma web educativa desarrollada como proyecto final para la asignatura de **Autómatas y Lenguajes Formales** en la **Universidad Mariano Gálvez de Guatemala (Sede Retalhuleu)**.
 
-El sistema implementa un entorno de desarrollo completo (IDE Web) que integra un **analizador léxico, parser sintáctico, árbol de derivación AST y un motor de ejecución/interpretación interactivo** diseñado específicamente para evaluar algoritmos descritos en pseudocódigo en español con rigor académico y formato financiero.
+El sistema implementa un entorno de desarrollo completo (IDE Web) que integra un **analizador léxico, parser sintáctico, árbol de derivación de sintaxis abstracta (AST) y un motor de ejecución/interpretación interactivo** diseñado específicamente para evaluar algoritmos descritos en pseudocódigo en español con rigor académico y formato financiero.
 
 ---
 
@@ -32,14 +32,14 @@ El sistema implementa un entorno de desarrollo completo (IDE Web) que integra un
 * **Clasificación de Lexemas:** Identifica y clasifica lexemas en `TIPO_DATO` (`ENTERO`, `DECIMAL`, `TEXTO`), `PALABRA_RESERVADA` (`INICIO`, `FIN`, `LEER`, `ESCRIBIR`, `SI`, `ENTONCES`, `SINO`, `FINSI`), `IDENTIFICADOR` (variables), `OPERADOR_ASIGNACION` (`<-`) y `CADENA_LITERAL`.
 * **Normalización de Identificadores:** La función `clean_var_key()` remueve espacios, guiones bajos y diferencias de mayúsculas/minúsculas para garantizar concordancia en memoria.
 
-### 2. ⚙️ Parser Sintáctico y Motor de Derivación GIC
+### 2. ⚙️ Parser Sintáctico y Motor de Derivación Gramática Independiente del Contexto (GIC)
 * **Estructura Gramatical:** Valida formalmente la regla de producción raíz `<programa> ::= INICIO <sentencias> FIN`.
-* **Derivación de Reglas GIC (`analizar_sintaxis_descriptiva()`):** Mapea cada línea de código procesada asociándola a su función técnica, estado de validación y sugerencia de sintaxis correcta.
+* **Derivación de Reglas de Gramática Independiente del Contexto (GIC) (`analizar_sintaxis_descriptiva()`):** Mapea cada línea de código procesada asociándola a su función técnica, estado de validación y sugerencia de sintaxis correcta.
 * **Manejo Estricto de Errores por Línea:** Identifica exactamente el número de línea donde ocurre una falla sintáctica o semántica, deteniendo la ejecución e informando la causa raíz.
 
-### 3. 🌳 Árbol Sintáctico Estructurado (AST)
-* **Generación del AST:** Durante el análisis, el backend construye nodos jerárquicos (`INICIO`, `DECLARACION`, `ASIGNACION`, `LEER`, `ESCRIBIR`, `FIN`).
-* **Renderizado Visual Dinámico:** La función JavaScript `renderASTTreeHTML()` transforma los nodos AST en estructuras visuales anidadas en tiempo real dentro de la interfaz web.
+### 3. 🌳 Árbol de Sintaxis Abstracta (AST)
+* **Generación del Árbol de Sintaxis Abstracta (AST):** Durante el análisis, el backend construye nodos jerárquicos (`INICIO`, `DECLARACION`, `ASIGNACION`, `LEER`, `ESCRIBIR`, `FIN`).
+* **Renderizado Visual Dinámico:** La función JavaScript `renderASTTreeHTML()` transforma los nodos del Árbol de Sintaxis Abstracta (AST) en estructuras visuales anidadas en tiempo real dentro de la interfaz web.
 
 ### 4. 🧮 Evaluador Aritmético e Intérprete (`WebInterpreter`)
 * **Sustitución Numérica y Precedencia:** Evalúa expresiones compuestas reemplazando identificadores declarados por sus valores en memoria en tiempo de ejecución.
@@ -55,7 +55,7 @@ El sistema implementa un entorno de desarrollo completo (IDE Web) que integra un
 | **RF-1** | Editor de Pseudocódigo | Área de edición interactiva con soporte de tipografía monoespaciada (`Fira Code`). |
 | **RF-2** | Definición del Lenguaje | Diccionario estricto de palabras reservadas del sistema. |
 | **RF-3** | Analizador Léxico | Motor regex para tokenización de componentes del lenguaje. |
-| **RF-4** | Árbol Sintáctico / GIC | Mapeo jerárquico AST y tabla de producción GIC con trazabilidad. |
+| **RF-4** | Árbol de Sintaxis Abstracta (AST) / Gramática Independiente del Contexto (GIC) | Mapeo jerárquico del Árbol de Sintaxis Abstracta (AST) y tabla de producción de la Gramática Independiente del Contexto (GIC) con trazabilidad. |
 | **RF-5** | Parser Sintáctico | Verificador gramatical estricto con diagnóstico de errores en tiempo real. |
 | **RF-6** | Tipos de Datos | Control estricto de ámbitos y tipos (`ENTERO`, `DECIMAL`, `TEXTO`). |
 | **RF-7** | Evaluador Aritmético | Motor numérico para operaciones compuestas (`+`, `-`, `*`, `/`). |
