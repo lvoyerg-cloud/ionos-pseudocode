@@ -927,7 +927,7 @@ HTML_TEMPLATE = r"""
 
             <div class="form-group">
                 <label style="color: #a855f7;">ESCRIBE DETALLADAMENTE QUÉ PROCESO O CÁLCULO NECESITAS REALIZAR:</label>
-                <input type="text" id="custom-req" class="form-control" placeholder="">
+                <input type="text" id="custom-req" class="form-control" placeholder="Escribe aquí el proceso o cálculo a realizar...">
             </div>
 
             <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px;">
@@ -1446,13 +1446,9 @@ HTML_TEMPLATE = r"""
         }
 
         function cargarCodigoEnCompilador(codigo) {
-            // 1. Asignar el nuevo código al editor
             document.getElementById('code').value = codigo;
-
-            // 2. Reseteo absoluto del estado de ejecución
             lastExecutionData = null;
 
-            // 3. Limpiar salidas visuales del editor
             document.getElementById('out').textContent = "";
             document.getElementById('debug').textContent = "";
             
@@ -1465,7 +1461,6 @@ HTML_TEMPLATE = r"""
             const astFull = document.getElementById('ast-tree-full');
             if (astFull) astFull.innerHTML = '<span style="color:#888; font-size:13px;"><i>Por favor ejecute un programa para explorar el árbol sintáctico completo.</i></span>';
 
-            // 4. Resetear tablas de análisis en las pestañas secundarias
             const sintaxisTbody = document.getElementById('sintaxis-dynamic-rows');
             if (sintaxisTbody) sintaxisTbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 20px;"><i>Por favor ejecute un algoritmo para generar el análisis.</i></td></tr>';
 
@@ -1481,7 +1476,6 @@ HTML_TEMPLATE = r"""
             const consoleProcTbody = document.getElementById('console-proc-dynamic-rows');
             if (consoleProcTbody) consoleProcTbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 20px;"><i>Por favor ejecute un programa para visualizar el procedimiento.</i></td></tr>';
 
-            // 5. Cerrar modal y enfocar vista principal del compilador
             cerrarModalPrincipiante();
             switchTab('compilador');
         }
@@ -1509,52 +1503,171 @@ HTML_TEMPLATE = r"""
         function generarCodigoPersonalizado() {
             const req = document.getElementById('custom-req').value.trim().toLowerCase();
             if (!req) {
-                alert("Por favor escribe qué operación necesitas realizar.");
+                alert("Por favor especifica qué proceso, texto u operación necesitas realizar.");
                 return;
             }
 
-            let cantidad = 2;
-            if (req.includes("tres") || req.includes("3")) cantidad = 3;
-            else if (req.includes("cuatro") || req.includes("4")) cantidad = 4;
-            else if (req.includes("cinco") || req.includes("5")) cantidad = 5;
-            else if (req.includes("seis") || req.includes("6")) cantidad = 6;
-            else if (req.includes("siete") || req.includes("7")) cantidad = 7;
-            else if (req.includes("ocho") || req.includes("8")) cantidad = 8;
+            // Mapa para interpretar números escritos en palabras o dígitos
+            const numMap = {
+                'un': 1, 'uno': 1, 'una': 1, '1': 1,
+                'dos': 2, '2': 2,
+                'tres': 3, '3': 3,
+                'cuatro': 4, '4': 4,
+                'cinco': 5, '5': 5,
+                'seis': 6, '6': 6,
+                'siete': 7, '7': 7,
+                'ocho': 8, '8': 8,
+                'nueve': 9, '9': 9,
+                'diez': 10, '10': 10
+            };
 
-            let code = "";
+            // Palabras clave numéricas
+            const palabrasEnteros = ['edad', 'edades', 'año', 'años', 'cantidad', 'cantidades', 'alumnos', 'estudiantes', 'personas', 'numero', 'numeros', 'número', 'números'];
+            const palabrasDecimales = ['precio', 'precios', 'monto', 'montos', 'sueldo', 'sueldos', 'salario', 'salarios', 'nota', 'notas', 'promedio', 'total', 'totales'];
 
-            if (req.includes("iva") || req.includes("impuesto")) {
-                code = "INICIO\nDECIMAL precio_total\nDECIMAL porcentaje_iva\nDECIMAL base_imponible\nDECIMAL iva_por_pagar\nLEER precio_total\nLEER porcentaje_iva\nbase_imponible <- precio_total / (1 + (porcentaje_iva / 100))\niva_por_pagar <- precio_total - base_imponible\nESCRIBIR iva_por_pagar\nFIN";
-            } 
-            else if (req.includes("descuento") || req.includes("porcentaje") || req.includes("%")) {
-                code = "INICIO\nDECIMAL precio_original\nDECIMAL porcentaje_descuento\nDECIMAL monto_descuento\nDECIMAL precio_final\nLEER precio_original\nLEER porcentaje_descuento\nmonto_descuento <- precio_original * (porcentaje_descuento / 100)\nprecio_final <- precio_original - monto_descuento\nESCRIBIR precio_final\nFIN";
-            } 
-            else if (req.includes("cadena") || req.includes("texto") || req.includes("nombre") || req.includes("string")) {
-                code = "INICIO\nTEXTO v_cadena\nLEER v_cadena\nESCRIBIR v_cadena\nFIN";
-            } 
-            else {
-                let op = "+";
-                if (req.includes("resta") || req.includes("diferencia") || req.includes("restar")) op = "-";
-                else if (req.includes("multiplic") || req.includes("producto") || req.includes("multiplicar")) op = "*";
-                else if (req.includes("divis") || req.includes("dividir") || req.includes("cociente")) op = "/";
+            // 1. DETECCIÓN DE OPERACIONES ARITMÉTICAS EXPLÍCITAS (+, -, *, /)
+            const opTokens = [
+                { keys: ['resta', 'restas', 'restar', 'menos', '-'], type: 'resta' },
+                { keys: ['suma', 'sumas', 'sumar', 'mas', '+'], type: 'suma' },
+                { keys: ['multiplicacion', 'multiplicaciones', 'multiplicación', 'multiplicar', 'por', '*'], type: 'mult' },
+                { keys: ['division', 'divisiones', 'división', 'dividir', 'entre', '/'], type: 'div' },
+                { keys: ['porcentaje', 'porcentajes', 'descuento', 'descuentos', '%'], type: 'porcentaje' },
+                { keys: ['iva', 'ivas', 'impuesto', 'impuestos'], type: 'iva' }
+            ];
 
-                let decls = [];
-                let leers = [];
-                let vars = [];
+            const words = req.split(/\s+/);
+            const opsList = [];
+            let tieneIva = false;
 
-                for (let i = 1; i <= cantidad; i++) {
+            for (let i = 0; i < words.length; i++) {
+                const w = words[i].normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9%+]/g, '');
+                const foundOp = opTokens.find(item => item.keys.includes(w));
+
+                if (foundOp) {
+                    if (foundOp.type === 'iva') {
+                        tieneIva = true;
+                    } else {
+                        let count = 1;
+                        if (i > 0) {
+                            const prev = words[i - 1].normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, '');
+                            if (numMap[prev] !== undefined) count = numMap[prev];
+                            else if (!isNaN(parseInt(prev))) count = parseInt(prev);
+                        }
+                        for (let c = 0; c < count; c++) opsList.push(foundOp.type);
+                    }
+                }
+            }
+
+            // Si hay cálculos matemáticos explícitos
+            if (opsList.length > 0 || tieneIva) {
+                const decls = [];
+                const leers = [];
+                const totalVariables = Math.max(opsList.length + 1, 2);
+
+                for (let i = 1; i <= totalVariables; i++) {
                     decls.push(`DECIMAL num${i}`);
                     leers.push(`LEER num${i}`);
-                    vars.push(`num${i}`);
+                }
+
+                let currentExpr = "num1";
+                for (let i = 0; i < opsList.length; i++) {
+                    const op = opsList[i];
+                    const nextVar = `num${i + 2}`;
+                    if (op === 'resta') currentExpr += ` - ${nextVar}`;
+                    else if (op === 'suma') currentExpr += ` + ${nextVar}`;
+                    else if (op === 'mult') currentExpr += ` * ${nextVar}`;
+                    else if (op === 'div') currentExpr += ` / ${nextVar}`;
+                    else if (op === 'porcentaje') currentExpr += ` * (${nextVar} / 100)`;
+                }
+
+                if (tieneIva) {
+                    decls.push("DECIMAL porcentaje_iva");
+                    leers.push("LEER porcentaje_iva");
+                    currentExpr = `(${currentExpr}) * (porcentaje_iva / 100)`;
                 }
 
                 decls.push("DECIMAL resultado");
-                let expr = vars.join(` ${op} `);
 
-                code = "INICIO\n" + decls.join("\n") + "\n" + leers.join("\n") + `\nresultado <- ${expr}\nESCRIBIR resultado\nFIN`;
+                const codigoAritmetico = [
+                    "INICIO",
+                    ...decls,
+                    ...leers,
+                    `resultado <- ${currentExpr}`,
+                    "ESCRIBIR resultado",
+                    "FIN"
+                ].join("\n");
+
+                cargarCodigoEnCompilador(codigoAritmetico);
+                return;
             }
 
-            cargarCodigoEnCompilador(code);
+            // 2. DETECTOR UNIVERSAL SEGURO DE VARIABLES
+            let cantidad = 1;
+
+            // Detectar la cantidad solicitada
+            const matchNum = req.match(/(\d+|un|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez)/i);
+            if (matchNum) {
+                const keyNum = matchNum[1].toLowerCase();
+                cantidad = numMap[keyNum] || parseInt(keyNum) || 1;
+            }
+
+            // Determinar tipo de dato
+            let tipoDato = "TEXTO";
+            if (palabrasEnteros.some(p => req.includes(p))) {
+                tipoDato = "ENTERO";
+            } else if (palabrasDecimales.some(p => req.includes(p))) {
+                tipoDato = "DECIMAL";
+            }
+
+            // Filtrar palabras comunes y aislar términos alfabéticos limpios
+            const stopwords = ['leer', 'una', 'un', 'unos', 'unas', 'cadena', 'de', 'letras', 'letra', 'el', 'la', 'los', 'las', 'pedir', 'ingresar', 'solicitar', 'realizar', 'proceso', 'calculo', 'cálculo', 'que', 'necesitas'];
+            
+            let palabrasLimpias = [];
+            words.forEach(w => {
+                // Dejar únicamente letras a-z
+                let clean = w.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z]/g, '');
+                
+                // Validar que sea un nombre seguro (no vacío, no stopword, no número)
+                if (clean.length > 0 && !stopwords.includes(clean) && numMap[clean] === undefined) {
+                    clean = clean.replace(/(es|s)$/i, ''); // quitar plural
+                    if (clean.length > 0) {
+                        palabrasLimpias.push(clean);
+                    }
+                }
+            });
+
+            // Asignar un nombre válido garantizado que empiece con letra
+            let nombreEntidad = "dato";
+            if (palabrasLimpias.length > 0) {
+                nombreEntidad = palabrasLimpias[0];
+            } else if (tipoDato === "ENTERO") {
+                nombreEntidad = "edad";
+            } else if (tipoDato === "DECIMAL") {
+                nombreEntidad = "monto";
+            } else {
+                nombreEntidad = "cadena";
+            }
+
+            const decls = [];
+            const leers = [];
+            const escribirs = [];
+
+            for (let i = 1; i <= cantidad; i++) {
+                const varName = cantidad === 1 ? nombreEntidad : `${nombreEntidad}${i}`;
+                decls.push(`${tipoDato} ${varName}`);
+                leers.push(`LEER ${varName}`);
+                escribirs.push(`ESCRIBIR ${varName}`);
+            }
+
+            const codigoGenerado = [
+                "INICIO",
+                ...decls,
+                ...leers,
+                ...escribirs,
+                "FIN"
+            ].join("\n");
+
+            cargarCodigoEnCompilador(codigoGenerado);
         }
 
         function renderASTTreeHTML(nodes) {
@@ -1580,7 +1693,6 @@ HTML_TEMPLATE = r"""
             const astTreeDiv = document.getElementById('ast-tree');
             const astTreeFullDiv = document.getElementById('ast-tree-full');
 
-            // 1. Limpieza de paneles previa a procesar la ejecución
             outDiv.textContent = "";
             debugDiv.textContent = "";
             if (tabDebugDiv) tabDebugDiv.textContent = "";
