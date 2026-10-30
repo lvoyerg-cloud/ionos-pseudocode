@@ -1,57 +1,143 @@
-# ⚡ IONOS PSEUDOCODE - UMG
+# IONOS Pseudocode
 
-> **Compilador, Intérprete y Entorno de Desarrollo para Pseudocódigo Interactivo**  
-> Proyecto desarrollado para la cátedra de *Autómatas y Lenguajes Formales* de la Universidad Mariano Gálvez de Guatemala.
+Aplicación web educativa para escribir, analizar y ejecutar pseudocódigo. El proyecto fue desarrollado con Python y Flask; la interfaz HTML, CSS y JavaScript está integrada en `app.py` mediante una plantilla HTML.
 
----
+## Funcionalidades incluidas
 
-## 🎓 Información Académica
+- Editor web para escribir pseudocódigo.
+- Análisis léxico y clasificación de tokens.
+- Validación descriptiva de instrucciones y diagnóstico de errores.
+- Ejecución de declaraciones de variables (`ENTERO`, `DECIMAL`, `TEXTO`).
+- Captura de datos mediante `LEER`.
+- Asignaciones y operaciones aritméticas con `<-`.
+- Salida de información mediante `ESCRIBIR`.
+- Registro de derivaciones de la Gramática Independiente del Contexto (GIC).
+- Visualización del árbol sintáctico y del procedimiento de ejecución.
+- Manual integrado y ejemplos para principiantes.
 
-* **🏛️ Universidad:** Universidad Mariano Gálvez de Guatemala (UMG)
-* **🏫 Facultad:** Ingeniería en Sistemas de Información y Ciencias de la Computación
-* **📍 Sede:** Retalhuleu
-* **📚 Curso:** Autómatas y Lenguajes Formales
-* **👨‍🏫 Catedrático:** Ing. Guillermo Alexander Pisqui Fuentes
-* **👥 Integrantes:**
-  * 👨‍💻 **Louis Neil Voyer García** — *(Carné: 2890-24-16741)*
-  * 👨‍💻 **José Aimar López Bolaños** — *(Carné: 2890-24-12732)*
+> Nota: el código fuente contiene palabras reservadas adicionales como `SI`, `ENTONCES` y `SINO`, pero la ejecución de estructuras condicionales no está implementada en el intérprete actual. La sintaxis admitida debe seguir el manual incluido en la aplicación.
 
----
+## Tecnologías y herramientas
 
-## 🛠️ Tecnologías y Herramientas Utilizadas
+| Tecnología / herramienta | Uso |
+|---|---|
+| Python 3 | Lenguaje principal y lógica del intérprete. |
+| Flask | Servidor web y rutas HTTP (`/` y `/run`). |
+| HTML5 | Estructura de la interfaz. |
+| CSS3 | Diseño visual y estilos. |
+| JavaScript | Interacción del editor, envío de código y presentación de resultados. |
+| Expresiones regulares (`re`) | Reconocimiento y clasificación de instrucciones y tokens. |
+| Git y GitHub | Control de versiones y alojamiento del código fuente. |
+| Visual Studio Code (opcional) | Editor recomendado para modificar el proyecto. |
 
-El desarrollo del proyecto combina un backend enfocado en el procesamiento del lenguaje y un frontend moderno responsivo:
+La interfaz utiliza Google Fonts para cargar las fuentes Inter y Fira Code cuando hay conexión a Internet.
 
-* **🐍 Python 3.8+:** Lenguaje base para el desarrollo del backend, motor de análisis y servidor de la aplicación.
-* **🌶️ Flask:** Framework web ligero utilizado para la gestión de rutas HTTP, APIs REST y renderizado dinámico de la interfaz.
-* **🔍 Módulo `re` (Regex):** Motor de Expresiones Regulares para la implementación del Analizador Léxico y extracción de Tokens.
-* **🌳 Estrategias AST & GIC:** Construcción manual del Árbol Sintáctico (AST) y logs de derivación basados en Gramáticas Libres de Contexto (GIC).
-* **🌐 HTML5 & CSS3:** Interfaz con diseño *Dark Theme* moderno, variables CSS, animaciones y componentes estructurados.
-* **⚡ JavaScript ES6+:** Lógica de cliente para la gestión de eventos, manipulado interactivo de tabs, llamadas asíncronas (`fetch`) y generador inteligente para principiantes.
-* **🌐 Webbrowser & Threading:** Módulos de Python para la apertura automática e independiente del navegador web al iniciar el servidor local.
+## Requisitos previos
 
----
+- Python 3.10 o superior.
+- `pip`, incluido normalmente con Python.
+- Un navegador web actualizado.
+- Conexión a Internet solo para cargar las fuentes externas; la aplicación puede funcionar sin ellas usando fuentes alternativas.
 
-## 🚀 Requerimientos Funcionales Implementados (RF)
+## Instalación e inicio
 
-* 📄 **Editor de Pseudocódigo (`RF-1`):** Área de texto interactiva para redacción y edición del algoritmo.
-* 🔤 **Definición del Lenguaje (`RF-2`):** Soporte de palabras clave (`INICIO`, `FIN`, `LEER`, `ESCRIBIR`, `SI`, `ENTONCES`, `SINO`, `FINSI`).
-* 🔍 **Analizador Léxico (`RF-3`):** Escáner léxico por Regex y generación de la Tabla de Tokens formal.
-* 🌳 **Árbol Sintáctico (`RF-4`):** Representación jerárquica visual del flujo sintáctico y reglas de producción aplicadas.
-* ⚙️ **Parser Sintáctico (`RF-5`):** Validación gramatical y reporte de errores descriptivos paso a paso por línea.
-* 📊 **Tipos de Datos (`RF-6`):** Soporte y control estricto de variables `ENTERO`, `DECIMAL` y `TEXTO`.
-* 🧮 **Operaciones Aritméticas (`RF-7`):** Evaluación de expresiones matemáticas (`+`, `-`, `*`, `/`) respetando precedencia.
-* 🖥️ **Entrada y Salida (`RF-8`):** Captura de datos mediante prompts intermedios y formato monetario en Quetzales (Q) para números.
-* 🛡️ **Ejecución Segura (`RF-10`):** Control de excepciones (bloqueo de división entre cero y referencias nulas).
-* 🌱 **Asistente Inteligente:** Motor seguro que traduce lenguaje natural a identificadores válidos en compilación.
+### Windows (PowerShell o CMD)
 
----
+1. Descarga o clona este repositorio.
+2. Abre una terminal dentro de la carpeta del proyecto.
+3. Crea un entorno virtual:
 
-## 💻 Instrucciones para Iniciar el Proyecto
+   ```powershell
+   python -m venv .venv
+   ```
 
-Sigue estos pasos sencillos para descargar, configurar e iniciar la aplicación en tu equipo local:
+4. Activa el entorno virtual:
 
-### 1. Prerrequisitos
-Asegúrate de contar con **Python 3.8** o superior instalado en tu equipo. Puedes verificarlo abriendo la terminal y ejecutando:
+   **PowerShell**
+   ```powershell
+   .\.venv\Scripts\Activate.ps1
+   ```
+
+   **CMD**
+   ```cmd
+   .venv\Scripts\activate.bat
+   ```
+
+5. Instala las dependencias:
+
+   ```powershell
+   pip install -r requirements.txt
+   ```
+
+6. Inicia la aplicación:
+
+   ```powershell
+   python app.py
+   ```
+
+7. La aplicación abrirá el navegador automáticamente. Si no sucede, visita:
+
+   http://127.0.0.1:5000/
+
+### Linux o macOS
+
 ```bash
-python --version
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python app.py
+```
+
+Después, abre http://127.0.0.1:5000/ en el navegador.
+
+Para detener el servidor, vuelve a la terminal y presiona `Ctrl + C`.
+
+## Estructura del repositorio
+
+```text
+ionos-pseudocode/
+├── app.py
+├── requirements.txt
+├── README.md
+└── .gitignore
+```
+
+## Ejemplo de pseudocódigo
+
+```text
+INICIO
+DECIMAL subtotal
+DECIMAL bono
+DECIMAL total
+LEER subtotal
+LEER bono
+total <- subtotal + bono
+ESCRIBIR total
+FIN
+```
+
+Al ejecutar este ejemplo, la aplicación solicita los valores de entrada y muestra el resultado en la consola de salida junto con los análisis disponibles.
+
+## Publicar el proyecto en GitHub
+
+1. Inicia sesión en https://github.com/ y crea un repositorio nuevo, por ejemplo `ionos-pseudocode`.
+2. Coloca los archivos de esta carpeta en tu repositorio local.
+3. Desde la terminal, ubicada en la carpeta del proyecto, ejecuta:
+
+   ```bash
+   git init
+   git add .
+   git commit -m "Primer commit: proyecto IONOS Pseudocode"
+   git branch -M main
+   git remote add origin https://github.com/TU-USUARIO/ionos-pseudocode.git
+   git push -u origin main
+   ```
+
+4. Sustituye `TU-USUARIO` por tu nombre de usuario de GitHub y utiliza la URL real que GitHub muestra para tu repositorio.
+
+## Consideraciones
+
+- Esta es una aplicación local de uso educativo. El servidor se inicia en el puerto `5000`.
+- No se debe publicar directamente en Internet sin revisar y reforzar la seguridad del intérprete y del servidor.
+- El intérprete evalúa expresiones aritméticas mediante `eval()`; por ello, no debe utilizarse para ejecutar código no confiable ni exponerse como servicio público.
+- El formulario de soporte de la interfaz muestra una confirmación visual; el código actual no integra un servicio externo para enviar tickets.
