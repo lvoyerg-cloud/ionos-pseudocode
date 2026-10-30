@@ -1,143 +1,146 @@
-# IONOS Pseudocode
+# ⚡ IONOS Pseudocode - UMG
 
-Aplicación web educativa para escribir, analizar y ejecutar pseudocódigo. El proyecto fue desarrollado con Python y Flask; la interfaz HTML, CSS y JavaScript está integrada en `app.py` mediante una plantilla HTML.
+> **Aplicación web educativa para escribir, analizar y ejecutar pseudocódigo.**  
+> Desarrollada con **Python** y **Flask**. La interfaz interactiva de usuario (HTML, CSS y JavaScript) se encuentra integrada directamente dentro de `app.py` mediante plantillas dinámicas.
 
-## Funcionalidades incluidas
+---
 
-- Editor web para escribir pseudocódigo.
-- Análisis léxico y clasificación de tokens.
-- Validación descriptiva de instrucciones y diagnóstico de errores.
-- Ejecución de declaraciones de variables (`ENTERO`, `DECIMAL`, `TEXTO`).
-- Captura de datos mediante `LEER`.
-- Asignaciones y operaciones aritméticas con `<-`.
-- Salida de información mediante `ESCRIBIR`.
-- Registro de derivaciones de la Gramática Independiente del Contexto (GIC).
-- Visualización del árbol sintáctico y del procedimiento de ejecución.
-- Manual integrado y ejemplos para principiantes.
+## 🎓 Información Académica
 
-> Nota: el código fuente contiene palabras reservadas adicionales como `SI`, `ENTONCES` y `SINO`, pero la ejecución de estructuras condicionales no está implementada en el intérprete actual. La sintaxis admitida debe seguir el manual incluido en la aplicación.
+* **🏛️ Universidad:** Universidad Mariano Gálvez de Guatemala (UMG)
+* **🏫 Facultad:** Ingeniería en Sistemas de Información y Ciencias de la Computación
+* **📍 Sede:** Retalhuleu
+* **📚 Curso:** Autómatas y Lenguajes Formales
+* **👨‍🏫 Catedrático:** Ing. Guillermo Alexander Pisqui Fuentes
+* **👥 Integrantes:**
+  * 👨‍💻 **Louis Neil Voyer García** — *(Carné: 2890-24-16741)*
+  * 👨‍💻 **José Aimar López Bolaños** — *(Carné: 2890-24-12732)*
 
-## Tecnologías y herramientas
+---
 
-| Tecnología / herramienta | Uso |
-|---|---|
-| Python 3 | Lenguaje principal y lógica del intérprete. |
-| Flask | Servidor web y rutas HTTP (`/` y `/run`). |
-| HTML5 | Estructura de la interfaz. |
-| CSS3 | Diseño visual y estilos. |
-| JavaScript | Interacción del editor, envío de código y presentación de resultados. |
-| Expresiones regulares (`re`) | Reconocimiento y clasificación de instrucciones y tokens. |
-| Git y GitHub | Control de versiones y alojamiento del código fuente. |
-| Visual Studio Code (opcional) | Editor recomendado para modificar el proyecto. |
+## 🚀 Funcionalidades Incluidas
 
-La interfaz utiliza Google Fonts para cargar las fuentes Inter y Fira Code cuando hay conexión a Internet.
+* 📄 **Editor Web Interactivo:** Espacio para redactar y modificar pseudocódigo en tiempo real.
+* 🔍 **Analizador Léxico (RF-3):** Escaneo y clasificación automática de tokens.
+* ⚙️ **Diagnóstico y Análisis Sintáctico (RF-5):** Validación descriptiva de instrucciones con reporte detallado de errores.
+* 📊 **Gestión de Tipos de Datos (RF-6):** Declaración e inicialización estricta de variables (`ENTERO`, `DECIMAL`, `TEXTO`).
+* ⌨️ **Captura de Datos (RF-8):** Interacción dinámica por teclado mediante sentencias `LEER`.
+* 🧮 **Asignación y Aritmética (RF-7):** Operaciones matemáticas jerárquicas con el operador `<-`.
+* 🖥️ **Consola de Salida:** Muestra de resultados procesados con comandos `ESCRIBIR`.
+* 📜 **Gramática GIC (RF-4):** Registro completo de derivaciones según la Gramática Independiente del Contexto.
+* 🌳 **Árbol Sintáctico (RF-4):** Representación jerárquica visual del flujo sintáctico y procedimientos de ejecución.
+* 💡 **Asistente e Instructor para Principiantes:** Manual integrado, presets rápidos y traducción segura de lenguaje natural.
 
-## Requisitos previos
+> 📌 **Nota:** El código fuente contiene palabras reservadas adicionales como `SI`, `ENTONCES` y `SINO`, pero la ejecución de estructuras condicionales no está implementada en el intérprete actual. La sintaxis admitida debe seguir las normas del manual de la aplicación.
 
-- Python 3.10 o superior.
-- `pip`, incluido normalmente con Python.
-- Un navegador web actualizado.
-- Conexión a Internet solo para cargar las fuentes externas; la aplicación puede funcionar sin ellas usando fuentes alternativas.
+---
 
-## Instalación e inicio
+## 🛠️ Tecnologías y Herramientas Utilizadas
 
-### Windows (PowerShell o CMD)
+| Tecnología / Herramienta | Uso e Implementación Técnica |
+| :--- | :--- |
+| **🐍 Python 3** | Lenguaje principal del backend y motor del intérprete. |
+| **🌶️ Flask** | Servidor web y API de rutas HTTP (`/` y `/run`). |
+| **📄 Archivo `requirements.txt`** | Control de dependencias de librerías para instalación del entorno. |
+| **🌐 HTML5** | Estructura semántica de la interfaz de usuario. |
+| **🎨 CSS3** | Diseños visuales, animación y temas oscuros (*Dark Mode*). |
+| **⚡ JavaScript (ES6+)** | Lógica de cliente, control de tabs, llamadas `fetch` e interactividad. |
+| **🔍 Expresiones Regulares (`re`)** | Motor de reconocimiento, análisis léxico y tokenización. |
+| **🐙 Git & GitHub** | Control de versiones y alojamiento remoto del repositorio. |
+| **💻 VS Code** | Entorno de desarrollo integrado (IDE) recomendado. |
 
-1. Descarga o clona este repositorio.
-2. Abre una terminal dentro de la carpeta del proyecto.
-3. Crea un entorno virtual:
+*La interfaz carga las fuentes **Inter** y **Fira Code** desde Google Fonts cuando hay conexión a Internet. Funciona normalmente sin conexión con tipografías del sistema.*
 
-   ```powershell
-   python -m venv .venv
-   ```
+---
 
-4. Activa el entorno virtual:
+## 📌 Requisitos Previos
 
-   **PowerShell**
-   ```powershell
-   .\.venv\Scripts\Activate.ps1
-   ```
+* **Python 3.10** o superior.
+* **`pip`** (Administrador de paquetes de Python).
+* Un navegador web actualizado.
+* Conexión a Internet opcional (únicamente para cargar tipografías web).
 
-   **CMD**
-   ```cmd
-   .venv\Scripts\activate.bat
-   ```
+---
 
-5. Instala las dependencias:
+## 💻 Instalación e Inicio Local
 
-   ```powershell
-   pip install -r requirements.txt
-   ```
+### 🪟 Windows (PowerShell o CMD)
 
-6. Inicia la aplicación:
+1. **Clonar o descargar el repositorio:**
+   ```bash
+   git clone [https://github.com/lvoyerg-cloud/ionos-pseudocode.git](https://github.com/lvoyerg-cloud/ionos-pseudocode.git)
+   cd ionos-pseudocode
+Crear un entorno virtual:
 
-   ```powershell
-   python app.py
-   ```
+PowerShell
+python -m venv .venv
+Activar el entorno virtual:
 
-7. La aplicación abrirá el navegador automáticamente. Si no sucede, visita:
+PowerShell:
 
-   http://127.0.0.1:5000/
+PowerShell
+.\.venv\Scripts\Activate.ps1
+CMD:
 
-### Linux o macOS
+DOS
+.venv\Scripts\activate.bat
+Instalar dependencias (requirements.txt):
 
-```bash
+PowerShell
+pip install -r requirements.txt
+Iniciar la aplicación:
+
+PowerShell
+python app.py
+Acceso Web:
+
+La aplicación abrirá automáticamente tu navegador. Si no sucede, ingresa a:
+
+👉 http://127.0.0.1:5000/
+
+🐧 🍎 Linux o macOS
+Bash
+# 1. Crear y activar entorno virtual
 python3 -m venv .venv
 source .venv/bin/activate
+
+# 2. Instalar dependencias
 pip install -r requirements.txt
+
+# 3. Ejecutar servidor
 python app.py
-```
+Accede desde tu navegador a http://127.0.0.1:5000/.
 
-Después, abre http://127.0.0.1:5000/ en el navegador.
+Para detener el servidor en cualquier SO, presiona Ctrl + C en la terminal.
 
-Para detener el servidor, vuelve a la terminal y presiona `Ctrl + C`.
-
-## Estructura del repositorio
-
-```text
+📂 Estructura del Repositorio
+Plaintext
 ionos-pseudocode/
-├── app.py
-├── requirements.txt
-├── README.md
-└── .gitignore
-```
-
-## Ejemplo de pseudocódigo
-
-```text
+├── app.py              # Aplicación principal, servidor Flask e interfaz
+├── requirements.txt    # Lista de dependencias del proyecto (Flask, etc.)
+├── README.md           # Documentación y manual del repositorio
+└── .gitignore          # Filtros de archivos excluidos para Git
+📖 Ejemplo de Pseudocódigo
+Plaintext
 INICIO
-DECIMAL subtotal
-DECIMAL bono
-DECIMAL total
-LEER subtotal
-LEER bono
-total <- subtotal + bono
-ESCRIBIR total
+  DECIMAL subtotal
+  DECIMAL bono
+  DECIMAL total
+
+  LEER subtotal
+  LEER bono
+
+  total <- subtotal + bono
+
+  ESCRIBIR total
 FIN
-```
+Al ejecutar este algoritmo, el sistema solicitará interactivamente los valores y desplegará los resultados en la consola con su respectivo formato monetario (Quetzales).
 
-Al ejecutar este ejemplo, la aplicación solicita los valores de entrada y muestra el resultado en la consola de salida junto con los análisis disponibles.
+📜 Licencia y Uso
+Proyecto realizado con fines académicos para el curso de Autómatas y Lenguajes Formales de la Universidad Mariano Gálvez de Guatemala.
 
-## Publicar el proyecto en GitHub
 
-1. Inicia sesión en https://github.com/ y crea un repositorio nuevo, por ejemplo `ionos-pseudocode`.
-2. Coloca los archivos de esta carpeta en tu repositorio local.
-3. Desde la terminal, ubicada en la carpeta del proyecto, ejecuta:
+4. Presiona el botón verde **"Commit changes..."** arriba a la derecha.
+5. Vuelve a dar clic en **"Commit changes"** en la ventana emergente.
 
-   ```bash
-   git init
-   git add .
-   git commit -m "Primer commit: proyecto IONOS Pseudocode"
-   git branch -M main
-   git remote add origin https://github.com/TU-USUARIO/ionos-pseudocode.git
-   git push -u origin main
-   ```
-
-4. Sustituye `TU-USUARIO` por tu nombre de usuario de GitHub y utiliza la URL real que GitHub muestra para tu repositorio.
-
-## Consideraciones
-
-- Esta es una aplicación local de uso educativo. El servidor se inicia en el puerto `5000`.
-- No se debe publicar directamente en Internet sin revisar y reforzar la seguridad del intérprete y del servidor.
-- El intérprete evalúa expresiones aritméticas mediante `eval()`; por ello, no debe utilizarse para ejecutar código no confiable ni exponerse como servicio público.
-- El formulario de soporte de la interfaz muestra una confirmación visual; el código actual no integra un servicio externo para enviar tickets.
+Haciéndolo así desde la web de GitHub queda actualizado al instante y te ahorras cualquier problema con el CMD.
