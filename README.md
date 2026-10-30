@@ -1,97 +1,56 @@
-# 🚀 IONOS PSEUDOCODE — Compilador e Intérprete Web de Pseudocódigo
+# ⚡ IONOS PSEUDOCODE - UMG
 
-[![UMG](https://img.shields.io/badge/UMG-Retalhuleu-00112c?style=for-the-badge)](https://www.umg.edu.gt/) [![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python)](https://www.python.org/) [![Flask](https://img.shields.io/badge/Flask-2.x-black?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/) [![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow?style=for-the-badge&logo=javascript)](https://developer.mozilla.org/es/docs/Web/JavaScript)
-
----
-
-## 📌 Descripción del Proyecto
-
-**IONOS PSEUDOCODE** es una plataforma web educativa desarrollada como proyecto final para la asignatura de **Autómatas y Lenguajes Formales** en la **Universidad Mariano Gálvez de Guatemala (Sede Retalhuleu)**.
-
-El sistema implementa un entorno de desarrollo completo (IDE Web) que integra un **analizador léxico, parser sintáctico, árbol de derivación de sintaxis abstracta (AST) y un motor de ejecución/interpretación interactivo** diseñado específicamente para evaluar algoritmos descritos en pseudocódigo en español con rigor académico y formato financiero.
+> **Compilador, Intérprete y Entorno de Pseudocódigo Interactivo**  
+> Proyecto desarrollado para la cátedra de *Autómatas y Lenguajes Formales* de la Universidad Mariano Gálvez de Guatemala.
 
 ---
 
-## 👥 Datos Académicos
+## 🎓 Información Académica
 
-* **🏛️ Institución:** Universidad Mariano Gálvez de Guatemala
-* **🎓 Facultad:** Facultad de Ingeniería en Sistemas
+* **🏛️ Universidad:** Universidad Mariano Gálvez de Guatemala (UMG)
+* **🏫 Facultad:** Ingeniería en Sistemas de Información y Ciencias de la Computación
 * **📍 Sede:** Retalhuleu
 * **📚 Curso:** Autómatas y Lenguajes Formales
 * **👨‍🏫 Catedrático:** Ing. Guillermo Alexander Pisqui Fuentes
-* **💻 Integrantes del Proyecto:**
-  * **Louis Neil Voyer García** (Carné: `2890-24-16741`)
-  * **José Aimar López Bolaños** (Carné: `2890-24-12732`)
+* **👥 Integrantes:**
+  * 👨‍💻 **Louis Neil Voyer García** — *(Carné: 2890-24-16741)*
+  * 👨‍💻 **José Aimar López Bolaños** — *(Carné: 2890-24-12732)*
 
 ---
 
-## 🔍 Arquitectura Técnica e Implementación Interna del Código
+## 🚀 Características Principales (Requerimientos Funcionales)
 
-### 1. 🔤 Analizador Léxico (Tokenizer / Lexer)
-* **Implementación en Backend (`lexer()`):** Utiliza expresiones regulares (`re`) optimizadas para descomponer el pseudocódigo en tokens formales.
-* **Clasificación de Lexemas:** Identifica y clasifica lexemas en `TIPO_DATO` (`ENTERO`, `DECIMAL`, `TEXTO`), `PALABRA_RESERVADA` (`INICIO`, `FIN`, `LEER`, `ESCRIBIR`, `SI`, `ENTONCES`, `SINO`, `FINSI`), `IDENTIFICADOR` (variables), `OPERADOR_ASIGNACION` (`<-`) y `CADENA_LITERAL`.
-* **Normalización de Identificadores:** La función `clean_var_key()` remueve espacios, guiones bajos y diferencias de mayúsculas/minúsculas para garantizar concordancia en memoria.
+El sistema cuenta con una arquitectura modular completa dividida en las siguientes secciones e indicadores técnicos:
 
-### 2. ⚙️ Parser Sintáctico y Motor de Derivación Gramática Independiente del Contexto (GIC)
-* **Estructura Gramatical:** Valida formalmente la regla de producción raíz `<programa> ::= INICIO <sentencias> FIN`.
-* **Derivación de Reglas de Gramática Independiente del Contexto (GIC) (`analizar_sintaxis_descriptiva()`):** Mapea cada línea de código procesada asociándola a su función técnica, estado de validación y sugerencia de sintaxis correcta.
-* **Manejo Estricto de Errores por Línea:** Identifica exactamente el número de línea donde ocurre una falla sintáctica o semántica, deteniendo la ejecución e informando la causa raíz.
-
-### 3. 🌳 Árbol de Sintaxis Abstracta (AST)
-* **Generación del Árbol de Sintaxis Abstracta (AST):** Durante el análisis, el backend construye nodos jerárquicos (`INICIO`, `DECLARACION`, `ASIGNACION`, `LEER`, `ESCRIBIR`, `FIN`).
-* **Renderizado Visual Dinámico:** La función JavaScript `renderASTTreeHTML()` transforma los nodos del Árbol de Sintaxis Abstracta (AST) en estructuras visuales anidadas en tiempo real dentro de la interfaz web.
-
-### 4. 🧮 Evaluador Aritmético e Intérprete (`WebInterpreter`)
-* **Sustitución Numérica y Precedencia:** Evalúa expresiones compuestas reemplazando identificadores declarados por sus valores en memoria en tiempo de ejecución.
-* **Formato Monetario en Quetzales (Q) (`RF-8`):** Toda salida numérica procesada vía `ESCRIBIR` que corresponda a tipos `ENTERO` o `DECIMAL` se formatea automáticamente con el símbolo de moneda guatemalteca (`Q0.00`).
-* **Entorno de Captura Interactivo (`LEER`):** Pausa la ejecución para solicitar entradas dinámicas mediante diálogos modales en la interfaz web, manejando cancelaciones de usuario sin colapsar el servidor.
+* 📄 **Editor de Pseudocódigo (`RF-1`):** Área interactiva para redacción de algoritmos en tiempo real.
+* 🔤 **Definición del Lenguaje (`RF-2`):** Soporte formal de palabras reservadas (`INICIO`, `FIN`, `LEER`, `ESCRIBIR`, `SI`, `ENTONCES`, `SINO`, `FINSI`).
+* 🔍 **Analizador Léxico (`RF-3`):** Escáner léxico mediante Expresiones Regulares (Regex) con generación dinámica de tabla de tokens.
+* 🌳 **Árbol Sintáctico (`RF-4`):** Generación de árbol de derivación (AST) visual para analizar la jerarquía de las sentencias.
+* ⚙️ **Parser Sintáctico (`RF-5`):** Validación detallada de reglas de producción y sintaxis con diagnósticos descriptivos por línea.
+* 📊 **Tipos de Datos (`RF-6`):** Control e inicialización estricta de variables de tipo `ENTERO`, `DECIMAL` y `TEXTO`.
+* 🧮 **Operaciones Aritméticas (`RF-7`):** Evaluador jerárquico de operaciones matemáticas (`+`, `-`, `*`, `/`) con manejo de precedencia.
+* 🖥️ **Entrada y Salida (`RF-8`):** Captura interactiva mediante ventanas emergentes y formateo automático de salidas numéricas a moneda local (**Quetzales - Q**).
+* 🛡️ **Ejecución Segura (`RF-10`):** Entorno protegido contra divisiones entre cero, referencias nulas y bucles infinitos.
+* 🌱 **Asistente Inteligente para Principiantes:** Generador que convierte lenguaje natural en código formal garantizando identificadores de variable válidos.
 
 ---
 
-## 🚀 Matriz de Requerimientos Funcionales (RF)
+## 🛠️ Tecnologías Utilizadas
 
-| Requisito | Nombre del Módulo | Descripción de Implementación Interna |
-| :---: | :--- | :--- |
-| **RF-1** | Editor de Pseudocódigo | Área de edición interactiva con soporte de tipografía monoespaciada (`Fira Code`). |
-| **RF-2** | Definición del Lenguaje | Diccionario estricto de palabras reservadas del sistema. |
-| **RF-3** | Analizador Léxico | Motor regex para tokenización de componentes del lenguaje. |
-| **RF-4** | Árbol de Sintaxis Abstracta (AST) / Gramática Independiente del Contexto (GIC) | Mapeo jerárquico del Árbol de Sintaxis Abstracta (AST) y tabla de producción de la Gramática Independiente del Contexto (GIC) con trazabilidad. |
-| **RF-5** | Parser Sintáctico | Verificador gramatical estricto con diagnóstico de errores en tiempo real. |
-| **RF-6** | Tipos de Datos | Control estricto de ámbitos y tipos (`ENTERO`, `DECIMAL`, `TEXTO`). |
-| **RF-7** | Evaluador Aritmético | Motor numérico para operaciones compuestas (`+`, `-`, `*`, `/`). |
-| **RF-8** | Entradas y Salidas | Diálogos modales para `LEER` y formato en Quetzales (`Q`) para `ESCRIBIR`. |
-| **RF-10** | Ejecución Segura | Interceptación de divisiones por cero y aislamiento de excepciones execution-time. |
+* 🐍 **Backend:** Python 3 + Flask (Servidor Web y Motor de Compilación)
+* 🌐 **Frontend:** HTML5, CSS3 (Variables CSS, Modern Dark Theme), JavaScript ES6+
+* ⚙️ **Motor Léxico / Sintáctico:** Módulo `re` (Regex) y Árboles de Análisis Sintáctico
 
 ---
 
-## 💻 Estructura del Repositorio
+## 💻 Instalación y Ejecución Local
 
-```text
-ionos-pseudocode/
-├── app.py              # Backend Flask, Léxico, Parser, Intérprete e Interfaz Web
-├── README.md           # Documentación técnica completa del proyecto
-├── requirements.txt    # Dependencias del servidor Python
-└── .gitignore          # Filtro de archivos excluidos del control de versiones
-```
+### Prerrequisitos
+Asegúrate de tener instalado **Python 3.8+** y **Git** en tu sistema.
 
----
-
-## 🛠️ Instrucciones de Instalación y Ejecución Local
+### Pasos para Ejecutar
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone [https://github.com/Lvoyerg-Cloud/ionos-pseudocode.git](https://github.com/Lvoyerg-Cloud/ionos-pseudocode.git)
+   git clone [https://github.com/lvoyerg-cloud/ionos-pseudocode.git](https://github.com/lvoyerg-cloud/ionos-pseudocode.git)
    cd ionos-pseudocode
-   ```
-
-2. **Instalar dependencias:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Ejecutar la aplicación:**
-   ```bash
-   python app.py
-   ```
-
-El navegador web se abrirá automáticamente en la dirección: `http://127.0.0.1:5000/`
